@@ -123,12 +123,13 @@ def draw_handler(surface, grid, true_grid):
     up += 1
 
 def new_grid():
-  def fix_whites(grid):
-    for i in range(0, len(grid)):
-      if grid[i] >= len(colors):
-        grid[i] = 0
-  true_grid = [randint(1, round((len(colors)-1)*(1/(F_PERCENT/100)))) for i in range(0, GRID_HEIGHT*GRID_WIDTH)]
-  fix_whites(true_grid)
+  filler = GRID_HEIGHT*GRID_WIDTH*F_PERCENT // 100
+  true_grid = [0 for i in range(0, GRID_HEIGHT*GRID_WIDTH)]
+  while filler > 0:
+    r = randint(0, len(true_grid) - 1)
+    if true_grid[r] == 0:
+      true_grid[r] = randint(1, len(colors) - 1)
+      filler -= 1
   grid = [0 for i in range(0, GRID_HEIGHT*GRID_WIDTH)]
   return grid, true_grid
 
